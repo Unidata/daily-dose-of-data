@@ -10,15 +10,17 @@ import numpy as np
 import numpy.ma as ma
 import pandas as pd
 from pyodide.http import open_url
+from pyscript import display
+from pyscript.web import div, page
 
 import metpy.calc as mpcalc
 from metpy.plots import add_metpy_logo, add_unidata_logo, SkewT
 from metpy.units import units, pandas_dataframe_to_unit_arrays
 
 
-def get_data_clicked():
-    station = Element('station_id').value
-    dt = datetime.fromisoformat(Element('datetime').value)
+def get_data_clicked(event):
+    station = page["#station_id"][0].value
+    dt = datetime.fromisoformat(page["#datetime"][0].value)
     console.log(f'Data for {station} at {dt} requested')
     try:
         plotter.get_data(station, dt)
@@ -32,8 +34,8 @@ def show_profile_clicked():
 
 
 class Plotter:
-    def __init__(self, div):
-        self._div = div
+    def __init__(self, divid):
+        self._divid = divid
         self._data = {}
         self._init_plot()
 
@@ -138,7 +140,6 @@ class Plotter:
         self.draw()
 
     def draw(self):
-        Element(self._div).write(self._fig)
-
+        display(self._fig, target="skewt")
 
 plotter = Plotter('skewt')

@@ -1,0 +1,9 @@
+name = "MetPy Skew-T in PyScript"
+description = "Exploration for Doug/Drew-n-Drew/Doug's Daily Dose of Data."
+packages = [
+    "lzma",
+    "matplotlib",
+    "metpy",
+    "numpy",
+    "pandas",
+]
